@@ -9,7 +9,12 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
      const projects = await projectsDB.getProjects()
-     res.status(200).json(projects)
+     if(projects.completed === 1) {
+       res.status(200).json(projects)
+     } else {
+      res.status(200).json(projects)
+     }
+    
   } catch (error) {
     res.status(500).json({message: 'error getting projects'})
   }

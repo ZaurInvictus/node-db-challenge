@@ -8,7 +8,7 @@ exports.up = function(knex) {
 
     table.string('project_name', 128).notNullable().unique()
     table.text('project_description')
-    table.boolean('completed')
+    table.boolean('completed').notNullable().defaultTo(false)
 
   })
 
@@ -35,7 +35,7 @@ exports.up = function(knex) {
 
     table.text('description').notNullable()
     table.string('notes', 128)
-    table.boolean('completed')
+    table.boolean('completed').notNullable().defaultTo(false)
 
     table.integer('project_id')
     .unsigned()
