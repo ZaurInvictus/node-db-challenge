@@ -4,9 +4,9 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('projects').insert([
-        {name: 'react-app', description: 'react projects app', completed: false},
-        {name: 'node-express app', description: 'node projects app', completed: false},
-        {name: 'react-redux-app', description: 'react-redux projects app', completed: false}
+        {project_name: 'react-app', project_description: 'react projects app', completed: false},
+        {project_name: 'node-express app', project_description: 'node projects app', completed: false},
+        {project_name: 'react-redux-app', project_description: 'react-redux projects app', completed: false}
       ]);
     });
 };

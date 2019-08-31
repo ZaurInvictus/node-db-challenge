@@ -6,6 +6,7 @@ module.exports = {
   getResources,
   postResource,
   getTasks,
+  getTaskById,
   postTask
 }
 
@@ -19,6 +20,20 @@ function getResources() {
 
 function getTasks() {
   return db('tasks')
+}
+
+function  getTaskById(project_id) {
+  return db('projects')
+    .select(
+      'project_name',
+      'project_description',
+      'tasks.description',
+      'tasks.notes',
+      'tasks.completed'
+    )
+    .innerJoin('tasks', 'projects.id', 'tasks.project_id')
+    .where({ project_id }).first()
+   
 }
 
 

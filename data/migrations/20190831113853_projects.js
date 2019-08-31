@@ -6,8 +6,8 @@ exports.up = function(knex) {
   .createTable('projects', table => {
     table.increments()
 
-    table.string('name', 128).notNullable().unique()
-    table.text('description')
+    table.string('project_name', 128).notNullable().unique()
+    table.text('project_description')
     table.boolean('completed')
 
   })

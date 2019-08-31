@@ -39,6 +39,18 @@ router.get('/tasks', async (req, res) => {
 })
 
 
+// GET TASKS BY ID
+router.get('/:id/tasks', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const task = await projectsDB.getTaskById(id);
+    res.status(200).json(task)
+  } catch (error) {
+    res.status(500).json({message: 'error getting task'})
+  }
+})
+
+
 // POST PROJECT
 router.post('/', async (req, res) => {
   const projectData = req.body;
