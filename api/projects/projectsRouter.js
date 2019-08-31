@@ -44,7 +44,7 @@ router.get('/tasks', async (req, res) => {
 })
 
 
-// GET TASKS BY ID
+// GET TASK BY ID
 router.get('/:id/tasks', async (req, res) => {
   const { id } = req.params;
   try {
@@ -91,8 +91,15 @@ router.post('/:id/tasks', async (req, res) => {
   const { id } = req.params; 
 
   try {
-    const task = await projectsDB.postTask(taskData, id);
-    res.status(201).json(task);
+   const project = await projectsDB.getProjectById(id)
+     
+   if(project) {
+     const task = await projectsDB.postTask(taskData, id)
+     res.status(201).json(task);
+   } else {
+    res.status(404).json({ message: 'Could not find project with given id.' })
+   }
+   
   } catch (err) {
     res.status(500).json({ message: 'Failed to post task' });
   }
