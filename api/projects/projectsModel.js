@@ -18,9 +18,19 @@ function getResources() {
   return db('resources')
 }
 
+
 function getTasks() {
-  return db('tasks')
+  return db('projects')
+  .select(
+    'project_name',
+    'project_description',
+    'tasks.description',
+    'tasks.notes',
+    'tasks.completed'
+  )
+  .innerJoin('tasks', 'projects.id', 'tasks.project_id')
 }
+
 
 function  getTaskById(project_id) {
   return db('projects')
@@ -33,7 +43,6 @@ function  getTaskById(project_id) {
     )
     .innerJoin('tasks', 'projects.id', 'tasks.project_id')
     .where({ project_id }).first()
-   
 }
 
 
