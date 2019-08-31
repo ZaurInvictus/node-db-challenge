@@ -67,5 +67,18 @@ router.post('/:id/resources', async (req, res) => {
 });
 
 
+// POST TASK
+router.post('/:id/tasks', async (req, res) => {
+  const taskData = req.body;
+  const { id } = req.params; 
+
+  try {
+    const task = await projectsDB.postTask(taskData, id);
+    res.status(201).json(task);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to post task' });
+  }
+});
+
 
 module.exports = router
