@@ -53,4 +53,19 @@ router.post('/', async (req, res) => {
 
 
 
+// POST RESOURCE
+router.post('/:id/resources', async (req, res) => {
+  const resourceData = req.body;
+  const { id } = req.params; 
+
+  try {
+    const resource = await projectsDB.postResource(resourceData, id);
+    res.status(201).json(resource);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to post resource' });
+  }
+});
+
+
+
 module.exports = router
