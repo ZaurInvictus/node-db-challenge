@@ -16,4 +16,27 @@ router.get('/', async (req, res) => {
 })
 
 
+
+// GET RESOURCES
+router.get('/resources', async (req, res) => {
+  try {
+     const resources = await projectsDB.getResources()
+     res.status(200).json(resources)
+  } catch (error) {
+    res.status(500).json({message: 'error getting resources'})
+  }
+})
+
+
+// GET TASKS
+router.get('/tasks', async (req, res) => {
+  try {
+     const tasks = await projectsDB.getTasks()
+     res.status(200).json(tasks)
+  } catch (error) {
+    res.status(500).json({message: 'error getting tasks'})
+  }
+})
+
+
 module.exports = router
