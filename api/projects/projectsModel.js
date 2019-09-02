@@ -3,11 +3,12 @@ const db = require('../../data/db-config');
 module.exports = {
   getProjects,
   getProjectById,
-  postProject,
   getResources,
-  postResource,
+  getResourceById,
   getTasks,
   getTaskById,
+  postProject,
+  postResource,
   postTask,
 }
 
@@ -22,8 +23,8 @@ const convert = obj => ({
 
 // RETURNS PROJECTS WITH CONVERTED COMPLETED PROPERTIES TO FALSE OR TRUE
 async function getProjects() {
-  const projects = await db('projects');
-  const newProjects = projects.map(convert);
+  const projects = await db('projects')
+  const newProjects = projects.map(convert)
   return newProjects
 }
 
@@ -33,8 +34,13 @@ function getProjectById(id) {
 }
 
 
+
 function getResources() {
   return db('resources')
+}
+
+function getResourceById(id) {
+  return db('resources').where({ id })
 }
 
 
@@ -65,7 +71,7 @@ function  getTaskById(project_id) {
       'tasks.completed'
     )
     .innerJoin('tasks', 'projects.id', 'tasks.project_id')
-    .where({ project_id }).first()
+    .where({ project_id })
 }
 
 

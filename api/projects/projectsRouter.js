@@ -17,21 +17,24 @@ router.get('/', async (req, res) => {
 
 
 // GET PROJECT BY ID
-router.get('/:id/project', async (req, res) => {
-  const { id } = req.params;
+  router.get('/:id/project', async (req, res) => {
+        const { id } = req.params
 
-  try {
-    const project = await projectsDB.getProjectById(id);
-
-    if (project) {
-      res.json(project);
-    } else {
-      res.status(404).json({ message: 'Could not find project with given id.' })
-    }
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to get project' });
-  }
-});
+        try{
+          const project = await projectsDB.getProjectById(id);
+          
+          if(project) {
+            project.tasks = await projectsDB.getTaskById(id);
+            project.resources = await projectsDB.getResourceById(id);
+            return res.status(200).json({project})
+          } else {
+            res.status(404).json({ message: 'Could not find project with given id.' })
+          }
+        } 
+          catch(error){
+          res.status(500).json({message: 'error getting project information'});
+      }
+}); 
 
 
 
@@ -42,6 +45,17 @@ router.get('/resources', async (req, res) => {
      res.status(200).json(resources)
   } catch (error) {
     res.status(500).json({message: 'error getting resources'})
+  }
+})
+
+// GET RESOURCE BY ID
+router.get('/:id/resource', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const task = await projectsDB.getResourceById(id);
+    res.status(200).json(task)
+  } catch (error) {
+    res.status(500).json({message: 'error getting resource'})
   }
 })
 
