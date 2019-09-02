@@ -6,7 +6,7 @@ exports.seed = function(knex) {
       return knex('tasks').insert([
         {notes: 'this is notes', description: 'sales force', completed: false, project_id: 1},
         {notes: 'some notes', description: 'for 200 people', completed: false, project_id: 2},
-        {notes: 'note from me', description: 'for drawing', completed: false, project_id: 3}
+        {notes: 'note from me', description: 'for drawing', completed: true, project_id: 3}
       ]);
     });
 };

@@ -8,11 +8,23 @@ module.exports = {
   postResource,
   getTasks,
   getTaskById,
-  postTask
+  postTask,
 }
 
-function getProjects() {
-  return db('projects')
+
+
+// HELPER FUNCTION TO COVERT COMPLETED PROPERTIES TO FALSE OR TRUE
+const convert = obj => ({
+  ...obj,
+  completed: !!obj.completed
+})
+
+
+// RETURNS PROJECTS WITH CONVERTED COMPLETED PROPERTIES TO FALSE OR TRUE
+async function getProjects() {
+  const projects = await db('projects');
+  const newProjects = projects.map(convert);
+  return newProjects
 }
 
 
@@ -26,8 +38,8 @@ function getResources() {
 }
 
 
-function getTasks() {
-  return db('projects')
+ async function getTasks() {
+  const projects = await db('projects')
   .select(
     'project_name',
     'project_description',
@@ -36,6 +48,10 @@ function getTasks() {
     'tasks.completed'
   )
   .innerJoin('tasks', 'projects.id', 'tasks.project_id')
+
+  // CONVERTS COMPLETED PROPERTIES TO FALSE OR TRUE
+  const newProjects = projects.map(convert)
+  return newProjects
 }
 
 

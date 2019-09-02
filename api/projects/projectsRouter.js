@@ -8,13 +8,8 @@ const router = express.Router();
 // GET PROJECTS
 router.get('/', async (req, res) => {
   try {
-     const projects = await projectsDB.getProjects()
-     if(projects.completed === 1) {
-       res.status(200).json(projects)
-     } else {
-      res.status(200).json(projects)
-     }
-    
+    const projects = await projectsDB.getProjects()
+     res.status(200).json(projects)
   } catch (error) {
     res.status(500).json({message: 'error getting projects'})
   }
@@ -37,6 +32,7 @@ router.get('/:id/project', async (req, res) => {
     res.status(500).json({ message: 'Failed to get project' });
   }
 });
+
 
 
 // GET RESOURCES
