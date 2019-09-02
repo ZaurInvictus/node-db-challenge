@@ -10,6 +10,8 @@ module.exports = {
   postProject,
   postResource,
   postTask,
+  removeProject,
+  updateProject
 }
 
 
@@ -88,4 +90,18 @@ function postResource(resourceData, project_id) {
 function postTask(taskData, project_id) {
   const task = {...taskData, project_id};
   return db('tasks').insert(task);
+}
+
+
+function removeProject(id) {
+  return db('projects')
+  .where('id', id)
+  .del()
+}
+
+
+function updateProject(id, changes) {
+  return db('projects')
+    .where('id', id)
+    .update(changes);
 }

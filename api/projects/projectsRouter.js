@@ -99,7 +99,7 @@ router.post('/', async (req, res) => {
 
 
 // POST RESOURCE
-router.post('/:id/resources', async (req, res) => {
+router.post('/:id/resource', async (req, res) => {
   const resourceData = req.body;
   const { id } = req.params; 
 
@@ -113,7 +113,7 @@ router.post('/:id/resources', async (req, res) => {
 
 
 // POST TASK
-router.post('/:id/tasks', async (req, res) => {
+router.post('/:id/task', async (req, res) => {
   const taskData = req.body;
   const { id } = req.params; 
 
@@ -128,9 +128,56 @@ router.post('/:id/tasks', async (req, res) => {
    }
    
   } catch (err) {
-    res.status(500).json({ message: 'Failed to post task' });
+    res.status(500).json({ message: 'Failed to post task' })
   }
 });
 
+
+
+// DELETE PROJECT
+router.delete('/:id/', async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const project = await projectsDB.getProjectById(id)
+      
+    if(project) {
+      const project = await projectsDB.removeProject(id)
+      res.status(201).json(project);
+    } else {
+     res.status(404).json({ message: 'Could not find project with given id.' })
+    }
+    
+   } catch (err) {
+     res.status(500).json({ message: 'Failed to delete project' });
+   }
+})
+
+
+// UPDATE PROJECT
+router.put('/:id/', async (req, res) => {
+  const { id } = req.params
+
+  //define req.body
+  const { project_name, project_description} = req.body
+
+  if(!project_name || !project_description ) { 
+  return res.status(400).json({ error: 'Please provide project_name and project_description' });
+  }
+  
+  try {
+    const project = await projectsDB.getProjectById(id)
+      
+    if(project) {
+      const task = await projectsDB.updateProject(id, req.body)
+      res.status(201).json(task);
+    } else {
+     res.status(404).json({ message: 'Could not find project with given id.' })
+    }
+    
+   } catch (err) {
+     res.status(500).json({ message: 'Failed to update project' });
+   }
+})
 
 module.exports = router
