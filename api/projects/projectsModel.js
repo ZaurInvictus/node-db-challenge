@@ -16,14 +16,14 @@ module.exports = {
 
 
 
-// HELPER FUNCTION TO COVERT COMPLETED PROPERTIES TO FALSE OR TRUE
+// HELPER FUNCTION TO CONVERT COMPLETED PROPERTIES TO FALSE OR TRUE
 const convert = obj => ({
   ...obj,
   completed: !!obj.completed
 })
 
 
-// RETURNS PROJECTS WITH CONVERTED COMPLETED PROPERTIES TO FALSE OR TRUE
+// RETURNING PROJECTS WITH CONVERTED COMPLETED PROPERTIES TO FALSE OR TRUE
 async function getProjects() {
   const projects = await db('projects')
   const newProjects = projects.map(convert)
